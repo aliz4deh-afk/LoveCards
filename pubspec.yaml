@@ -23,7 +23,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/cover.png
-    - assets/images/pos1.png
-    - assets/images/pos2.png
+    - assets/images/c1.jpg
+    - assets/images/c2.jpg
+    - assets/images/c3.jpg
     # ما بعداً ۴۰ تصویر را اینجا اضافه می‌کنیم
