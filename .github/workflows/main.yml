@@ -1,90 +1,37 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:scratcher/scratcher.dart';
+name: Build Android APK
 
-void main() {
-  runApp(const LoveCardsApp());
-}
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
 
-class LoveCardsApp extends StatelessWidget {
-  const LoveCardsApp({super.key});
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Love Cards",
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: Colors.pink,
-        scaffoldBackgroundColor: const Color(0xff1A1A1A),
-      ),
-      home: const ScratchGridPage(),
-    );
-  }
-}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-class ScratchGridPage extends StatelessWidget {
-  const ScratchGridPage({super.key});
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-  final int totalCards = 40;
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("💘 Love Cards 💘"),
-        centerTitle: true,
-        backgroundColor: Colors.pink,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: MasonryGridView.count(
-          crossAxisCount: 2,
-          mainAxisSpacing: 12,
-          crossAxisSpacing: 12,
-          itemCount: totalCards,
-          itemBuilder: (context, index) {
-            return _LoveCard(index: index);
-          },
-        ),
-      ),
-    );
-  }
-}
+      - name: Get dependencies
+        run: flutter pub get
 
-class _LoveCard extends StatelessWidget {
-  final int index;
+      - name: Build APK
+        run: flutter build apk --debug
 
-  const _LoveCard({required this.index});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 8,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(18),
-        child: Scratcher(
-          brushSize: 45,
-          threshold: 50,
-          color: Colors.pink.shade300,
-          image: Image.asset(
-            "assets/images/cover.png",
-            fit: BoxFit.cover,
-          ),
-          child: Container(
-            height: 220,
-            color: Colors.white,
-            child: Image.asset(
-              "assets/images/pos${index + 1}.png",
-              fit: BoxFit.contain,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: LoveCards-APK
+          path: build/app/outputs/flutter-apk/app-debug.apk
