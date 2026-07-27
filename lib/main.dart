@@ -33,11 +33,11 @@ class ScratchGridPage extends StatefulWidget {
 
 class _ScratchGridPageState extends State<ScratchGridPage> {
   final List<String> images = [
-    'asset/images/c1.jpg',
-    'asset/images/c2.jpg',
-    'asset/images/c3.jpg',
-    'asset/images/c4.jpg',
-    'asset/images/c5.jpg',
+    'assets/images/1.png',
+    'assets/images/2.png',
+    'assets/images/3.png',
+    'assets/images/4.png',
+    'assets/images/5.png',
   ];
 
   @override
