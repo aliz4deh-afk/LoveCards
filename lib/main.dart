@@ -32,8 +32,13 @@ class ScratchGridPage extends StatefulWidget {
 }
 
 class _ScratchGridPageState extends State<ScratchGridPage> {
-  // تعداد کارت‌ها (می‌تونی بعداً به ۴۰ تغییرش بدی)
-  final int totalCards = 12;
+  final List<String> images = [
+    'asset/images/c1.jpg',
+    'asset/images/c2.jpg',
+    'asset/images/c3.jpg',
+    'asset/images/c4.jpg',
+    'asset/images/c5.jpg',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +54,7 @@ class _ScratchGridPageState extends State<ScratchGridPage> {
           crossAxisCount: 2,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
-          itemCount: totalCards,
+          itemCount: images.length,
           itemBuilder: (context, index) {
             return Card(
               elevation: 6,
@@ -59,15 +64,14 @@ class _ScratchGridPageState extends State<ScratchGridPage> {
                 child: Scratcher(
                   brushSize: 40,
                   threshold: 50,
-                  color: Colors.pink[300]!,
-                  image: Image.asset('assets/images/cover.png', fit: BoxFit.cover),
+                  color: Colors.pink[400]!,
                   child: Container(
-                    height: 180,
+                    height: 200,
                     width: double.infinity,
-                    color: Colors.white,
+                    color: Colors.black,
                     child: Image.asset(
-                      'assets/images/pos1.png', // عکس زیرین
-                      fit: BoxFit.contain,
+                      images[index],
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
