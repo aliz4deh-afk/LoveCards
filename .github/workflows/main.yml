@@ -27,6 +27,11 @@ jobs:
       - name: Repair Flutter Project Structure
         run: flutter create . --platforms=android
 
+      - name: Upgrade Android SDK version for packages
+        run: |
+          sed -i 's/compileSdkVersion flutter.compileSdkVersion/compileSdkVersion 34/g' android/app/build.gradle
+          sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 21/g' android/app/build.gradle || true
+
       - name: Get dependencies
         run: flutter pub get
 
