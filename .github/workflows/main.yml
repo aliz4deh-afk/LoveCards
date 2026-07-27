@@ -1,40 +1,28 @@
-name: Build Android APK
+name: love_cards
+description: "A professional couples intimacy & position app."
+publish_to: 'none'
 
-on:
-  push:
-    branches: [ "main", "master" ]
-  workflow_dispatch:
+version: 1.0.0+1
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+environment:
+  sdk: '>=3.0.0 <4.0.0'
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+dependencies:
+  flutter:
+    sdk: flutter
+  scratcher: ^2.5.0
+  shared_preferences: ^2.2.0
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-
-      - name: Repair Flutter Project Structure
-        run: flutter create . --platforms=android
-
-      - name: Get dependencies
-        run: flutter pub get
-
-      - name: Build APK
-        run: flutter build apk --debug --android-skip-build-dependency-validation
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: LoveCards-APK
-          path: build/app/outputs/flutter-apk/app-debug.apk
+flutter:
+  uses-material-design: true
+  assets:
+    - 1.png
+    - 2.png
+    - 3.png
+    - 4.png
+    - 5.png
